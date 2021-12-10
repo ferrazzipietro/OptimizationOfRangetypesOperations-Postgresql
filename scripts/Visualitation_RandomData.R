@@ -3,7 +3,7 @@
 # Visualization
 ##################################
 ##################################
-ranges <- read_csv("./RandomData.csv")
+ranges <- read_csv("/Users/pietro/Desktop/DBSA/Progetto/randomData3.csv")
 LowerBounds <- ranges$LowerBounds
 UpperBounds <- ranges$UpperBounds
 n_lev <- 40
@@ -13,7 +13,7 @@ y_c <- cut(UpperBounds, n_lev)
 # Calculate joint counts at cut levels:
 z <- table(x_c, y_c)
 
-write_csv(z, "/Users/pietro/Desktop/DBSA/Progetto/Histogram.csv")
+#write_csv(z, "/Users/pietro/Desktop/DBSA/Progetto/Histogram.csv")
 
 
 # Plot the domain of the data
@@ -26,3 +26,4 @@ hist3D(z=z, border="black", xlab="Lower Bound", ylab="Upper Bound",
 # Plot the 2D restriction of the previous hist
 image2D(z=z, border="black", xlab="Lower Bound", ylab="Upper Bound",
         main="Distribution of Ranges")
+
