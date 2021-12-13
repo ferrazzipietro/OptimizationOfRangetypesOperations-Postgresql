@@ -45,3 +45,14 @@ export <- as.data.frame(c(m.ZINB$coefficients$zero, m.ZINB$coefficients$count))
 colnames(export) <- c("coef")
 row.names(export) <- c("Beta1", "Beta2","Beta3","Beta4","Beta5","Beta6")
 write.table(export,"/Users/pietro/Desktop/DBSA/Progetto/coefficients0.txt" )
+
+############################
+# Integrate
+############################
+LBgrid <- seq(min(means_x), 500, length.out=1000)
+UBgrid <- seq(min(means_y), 500, length.out=1000)
+I0 <- sum(predict(m.ZINB, newdata=data.frame(means_x=LBgrid, means_y=UBgrid) , type="count"))
+
+sum(fitted(m.ZINB))
+sum((means_x<500))
+
