@@ -1,0 +1,14 @@
+"<<" selectivity
+
+randomdata.csv 29750.33
+randomdata1.csv 17631.9
+randomdata2.csv 20164.94
+randomdata3.csv 3681.529
+
+
+"&&" selectivity
+
+randomdata.csv 10234.56
+randomdata1.csv 23743.33
+randomdata2.csv 25546.84
+randomdata3.csv 31489.34
