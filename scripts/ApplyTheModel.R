@@ -1,7 +1,9 @@
 ############################
 # Read the data
 ############################
-data <- read_csv("/Users/pietro/Desktop/DBSA/Progetto/randomData.csv")
+library(tidyverse)
+data1 <- read_csv("/Users/pietro/Desktop/DBSA/PosgreSQL-Sistem-Architecture-Project/RandomData/randomData1.csv")
+data1 <- read_csv("/Users/pietro/Desktop/DBSA/PosgreSQL-Sistem-Architecture-Project/RandomData/randomData1.csv")
 
 ############################
 # Prepare data for NBZIP creating the histograms
@@ -38,21 +40,23 @@ dataNo0 <- d %>% filter(means_x < means_y)
 # Apply the model 
 ############################
 # neagtive binomial zero inflated model 
+library(pscl)
 m.ZINB <- zeroinfl(freq ~ means_y+means_x, dist = "negbin", data=dataNo0)
 summary(m.ZINB)
 sum(dataNo0$freq==0)/nrow(dataNo0)
 export <- as.data.frame(c(m.ZINB$coefficients$zero, m.ZINB$coefficients$count))
 colnames(export) <- c("coef")
+
+
+############################
+# Prevision vs observed
+############################
+library(plotly)
+plot_ly(x=means_x,y=means_y, z=freq, type="scatter3d", color=I(2), size=8) 
+plot_ly(x=means_x[-(1:(27889-20938))],y=means_y[-(1:(27889-20938))],
+        z=predict(m.ZINB, means_x=means_x, means_y=means_y), 
+        type="scatter3d",
+        size=I(8)) 
+
 row.names(export) <- c("Beta1", "Beta2","Beta3","Beta4","Beta5","Beta6")
-write.table(export,"/Users/pietro/Desktop/DBSA/Progetto/coefficients0.txt" )
-
-############################
-# Integrate
-############################
-LBgrid <- seq(min(means_x), 500, length.out=1000)
-UBgrid <- seq(min(means_y), 500, length.out=1000)
-I0 <- sum(predict(m.ZINB, newdata=data.frame(means_x=LBgrid, means_y=UBgrid) , type="count"))
-
-sum(fitted(m.ZINB))
-sum((means_x<500))
-
+# write.table(export,"/Users/pietro/Desktop/DBSA/Progetto/coefficients0.txt" )
